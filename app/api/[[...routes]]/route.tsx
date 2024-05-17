@@ -8,14 +8,14 @@ import { serveStatic } from 'frog/serve-static';
 
 // Redis
 import { createClient } from 'redis';
-
+import dotenv from 'dotenv';
 
 // Update with redis to use functons or can do dummy data
 const client = createClient({
-  password: '',
+  password: process.env.REDIS_PASSWORD,
   socket: {
-    host: '',
-    port: 
+    host: process.env.REDIS_HOST,
+    port: 13192
   }
 });
 
@@ -442,18 +442,18 @@ return c.res({
 })
 
 
-app.frame('/checkGame', async(c) => {
-  // Display the username and reward for the current user
-  let userScore = await client.zScore('userScores', 'test');
-  // If no rewards show one screen
-  // If there are rewards show a different screen
-  if(userScore != null){
-    // Show them current reward
+// app.frame('/checkGame', async(c) => {
+//   // Display the username and reward for the current user
+//   let userScore = await client.zScore('userScores', 'test');
+//   // If no rewards show one screen
+//   // If there are rewards show a different screen
+//   if(userScore != null){
+//     // Show them current reward
 
-  }
+//   }
 
-return c.res({})
-})
+// return c.res({})
+// })
 
 function getLeaderboardImgParams(usernames: {
   score: number;
