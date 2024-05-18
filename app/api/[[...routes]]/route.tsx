@@ -442,7 +442,7 @@ return c.res({
 })
 
 
-app.frame('/checkGame', async(c) => {
+app.frame('/reward', async(c) => {
   // Display the username and reward for the current user
   let userScore = await client.zScore('userScores', 'test');
   // If no rewards show one screen

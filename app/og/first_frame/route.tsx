@@ -27,9 +27,6 @@ export async function GET(req: Request) {
                         </div> 
                         <div tw="flex text-3xl flex-col p-7">
                             <div tw='justify-center text-center text-wrap'>{rule_1}</div>
-                            <div tw='justify-center text-center text-wrap'>{rule_2}</div>
-                            <div tw='justify-center text-center text-wrap'>{rule_2}</div>
-                            <div tw='justify-center text-center text-wrap'>{rule_2}</div>
                         </div>
                     </div>
                 </div>
