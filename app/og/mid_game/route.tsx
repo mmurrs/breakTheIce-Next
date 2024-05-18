@@ -22,9 +22,10 @@ export async function GET(req: Request) {
     const rightSideTitle = "On the Ice"
     const usernames = getUsernames(searchParams);
 
-    const ogImgFirstFrame = await fetch(new URL('../../../public/mid_game.png', import.meta.url)).then(
-        (res) => res.arrayBuffer(),
-    );
+    const ogImgFirstFrame = process.env.NEXT_PUBLIC_MID_GAME_URL
+    // const ogImgFirstFrame = await fetch(new URL('../../../public/mid_game.png', import.meta.url)).then(
+    //     (res) => res.arrayBuffer(),
+    // );
 
     return new ImageResponse (
         (

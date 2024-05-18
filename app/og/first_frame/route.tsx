@@ -6,9 +6,10 @@ import { ImageResponse } from 'next/og'
 export const runtime = 'edge';
 
 export async function GET(req: Request) { 
-    const ogImgFirstFrame = await fetch(new URL('../../../public/first_frame.png', import.meta.url)).then(
-        (res) => res.arrayBuffer(),
-    );
+    const ogImgFirstFrame = process.env.NEXT_PUBLIC_FIRST_FRAME_URL
+    // await fetch(new URL('../../../public/first_frame.png', import.meta.url)).then(
+    //     (res) => res.arrayBuffer(),
+    // );
 
     let title = "Don't Break the Ice"
     let rule_1 = "Click the button to get on the ice."
