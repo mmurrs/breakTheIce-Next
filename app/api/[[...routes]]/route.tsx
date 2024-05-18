@@ -7,49 +7,62 @@ import { devtools } from 'frog/dev';
 import { serveStatic } from 'frog/serve-static';
 
 // Redis
-import { createClient } from 'redis';
+import { createClient, RedisClientType } from 'redis';
+let client: RedisClientType;
+let host = process.env.HOST
+let port = process.env.PORT
+let gameDuration: number;
+let gameEndTime: number;
+let startTargetClicks: number;
+let roundKey: any;
+let baseReward: number;
+let roundReward: number;
+let potMultiplier: number;
+
+if (host && port) {
+  // Update with redis to use functons or can do dummy data
+  client = createClient({
+    password: '',
+    socket: {
+      host: host,
+      port: parseInt(port)
+    }
+  });
+  client.on('error', err => console.log('Redis Client Error', err));
+
+  (async () => {
+    await client.connect();
+  })()
+
+  // Setup game constraints
+  gameDuration = 1 * 60 * 100;
+  gameEndTime = Date.now() + gameDuration;
+  // const startTargetClicks = Math.floor(Math.random() * 10) + 1;
+  startTargetClicks = 1;
+  roundKey = "round:clickers";
+  baseReward = 1;
+  roundReward = baseReward;
+  potMultiplier = 1.1;
 
 
-// Update with redis to use functons or can do dummy data
-const client = createClient({
-  password: '',
-  socket: {
-    host: '',
-    port: 
-  }
-});
+  (async () => {
+    // TODO: Remove
+    await client.del('userScores');
+  })()
 
-client.on('error', err => console.log('Redis Client Error', err));
-
-(async () => {
-  await client.connect();
-})()
-
-// Setup game constraints
-const gameDuration = 1 * 60 * 100;
-const gameEndTime = Date.now() + gameDuration;
-// const startTargetClicks = Math.floor(Math.random() * 10) + 1;
-const startTargetClicks = 1;
-const roundKey = "round:clickers";
-const baseReward = 1;
-let roundReward = baseReward;
-let potMultiplier = 1.1;
+  client.multi()
+    .del(roundKey)
+    .set('roundEndTime', gameEndTime.toString())
+    .set('targetClicks', startTargetClicks)
+    .set('baseReward', baseReward)
+    .set('roundReward', roundReward)
+    .zAdd('userScores', { score: 0, value: 'Swell'})
+    .exec();
+  // End game setup
+}
 
 
-(async () => {
-  // TODO: Remove
-  await client.del('userScores');
-})()
 
-client.multi()
-  .del(roundKey)
-  .set('roundEndTime', gameEndTime.toString())
-  .set('targetClicks', startTargetClicks)
-  .set('baseReward', baseReward)
-  .set('roundReward', roundReward)
-  .zAdd('userScores', { score: 0, value: 'Swell'})
-  .exec();
-// End game setup
 
 // Function to start a new round
 // Used after time limit is broken or currClicks exceeds numClicks
@@ -196,7 +209,12 @@ const randomNumber = Math.floor(Math.random() * 10) + 1;
 
 app.use('/*', serveStatic({ root: './public' }))
 
-const framesUrl = new URL("http://localhost:3001"); // => change to .env.framesUrl
+let framesUrl: URL;
+let urlString = process.env.PUBLIC_URL;
+if (urlString) {
+  framesUrl = new URL(urlString)
+}
+
 
 app.frame('/', (c) => {
   let imgUrl = new URL("/og/first_frame", framesUrl).href
@@ -442,18 +460,18 @@ return c.res({
 })
 
 
-app.frame('/reward', async(c) => {
-  // Display the username and reward for the current user
-  let userScore = await client.zScore('userScores', 'test');
-  // If no rewards show one screen
-  // If there are rewards show a different screen
-  if(userScore != null){
-    // Show them current reward
+// app.frame('/reward', async(c) => {
+//   // Display the username and reward for the current user
+//   let userScore = await client.zScore('userScores', 'test');
+//   // If no rewards show one screen
+//   // If there are rewards show a different screen
+//   if(userScore != null){
+//     // Show them current reward
 
-  }
+//   }
 
-return c.res({})
-})
+// return c.res({})
+// })
 
 function getLeaderboardImgParams(usernames: {
   score: number;
