@@ -212,7 +212,7 @@ const randomNumber = Math.floor(Math.random() * 10) + 1;
 app.use('/*', serveStatic({ root: './public' }))
 
 let framesUrl: URL;
-let urlString = process.env.NEXT_PUBLIC_FRAMES_URL || "";
+let urlString = "https://break-the-ice-next.vercel.app";
 if (urlString) {
   framesUrl = new URL(urlString)
 }
