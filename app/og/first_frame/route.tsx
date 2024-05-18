@@ -20,7 +20,7 @@ export async function GET(req: Request) {
             <div 
                 tw='flex text-white w-screen h-full bg-black'
             >
-                <img tw='w-1/2 h-full' src={ogImgFirstFrame} alt="Image of the First Frame" />
+                <img tw='w-1/2 h-full' src={'https://magenta-hollow-tiglon-795.mypinata.cloud/ipfs/QmR411zxDZFafjmjWWZRWHc714UTHaVKTZ6yjvU4689nYv/first_frame.png'} alt="Image of the First Frame" />
                 <div tw="flex  w-1/2">
                     <div tw="flex flex-col h-full" >
                         <div tw='text-6xl p-7 underline underline-offset-4'>
