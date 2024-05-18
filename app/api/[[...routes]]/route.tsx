@@ -120,7 +120,7 @@ async function getUsernames(fids: string[]) {
     method: 'GET',
     headers: { accept: 'application/json', api_key: '14575066-A15B-4807-9508-F260E1B2223A' }
   };
-  let temp: any = [];
+  let temp: any[] = [];
   let allUsernames = [];
 
   console.log("about to get the username");
@@ -135,6 +135,7 @@ async function getUsernames(fids: string[]) {
     // Loop through temp and creating a new array of "usernames" from temp[i]["username"]
     // looop through temp and only returns the "display_name" from temp[i]["display_name"]    
     for(let i = 0; i < temp.length; i++){
+
       allUsernames.push(temp[i]["username" as any] as string);
     }
   console.log("allUsernames: ", allUsernames);
