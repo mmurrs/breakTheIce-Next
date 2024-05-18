@@ -11,6 +11,7 @@ import { createClient, RedisClientType } from 'redis';
 let client: RedisClientType;
 let host = process.env.NEXT_PUBLIC_HOST
 let port = process.env.NEXT_PUBLIC_PORT
+let password = process.env.NEXT_PUBLIC_PASSWORD
 let gameDuration: number;
 let gameEndTime: number;
 let startTargetClicks: number;
@@ -22,7 +23,7 @@ let potMultiplier: number;
 if (host && port) {
   // Update with redis to use functons or can do dummy data
   client = createClient({
-    password: '',
+    password: password,
     socket: {
       host: host,
       port: parseInt(port)
