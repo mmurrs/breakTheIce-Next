@@ -9,8 +9,8 @@ import { serveStatic } from 'frog/serve-static';
 // Redis
 import { createClient, RedisClientType } from 'redis';
 let client: RedisClientType;
-let host = process.env.HOST
-let port = process.env.PORT
+let host = process.env.NEXT_PUBLIC_HOST
+let port = process.env.NEXT_PUBLIC_PORT
 let gameDuration: number;
 let gameEndTime: number;
 let startTargetClicks: number;
@@ -210,7 +210,7 @@ const randomNumber = Math.floor(Math.random() * 10) + 1;
 app.use('/*', serveStatic({ root: './public' }))
 
 let framesUrl: URL;
-let urlString = process.env.PUBLIC_URL;
+let urlString = process.env.NEXT_PUBLIC_FRAMES_URL;
 if (urlString) {
   framesUrl = new URL(urlString)
 }
