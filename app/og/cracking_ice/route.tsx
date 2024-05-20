@@ -16,9 +16,10 @@ export async function GET(req: Request) {
 
 
 
-    const ogImgFirstFrame = await fetch(new URL('../../../public/cracking_ice.png', import.meta.url)).then(
-        (res) => res.arrayBuffer(),
-    );
+    const ogImgFirstFrame = process.env.NEXT_PUBLIC_CRACKING_ICE_URL
+    // await fetch(new URL('../../../public/cracking_ice.png', import.meta.url)).then(
+    //     (res) => res.arrayBuffer(),
+    // );
 
     return new ImageResponse (
         (

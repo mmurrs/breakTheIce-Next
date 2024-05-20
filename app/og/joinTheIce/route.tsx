@@ -37,9 +37,10 @@ export async function GET(req: Request) {
 
 
 
-    const ogImgFirstFrame = await fetch(new URL('../../../public/mid_game.png', import.meta.url)).then(
-        (res) => res.arrayBuffer(),
-    );
+    const ogImgFirstFrame = process.env.NEXT_PUBLIC_MID_GAME_URL
+    //  await fetch(new URL('../../../public/mid_game.png', import.meta.url)).then(
+    //     (res) => res.arrayBuffer(),
+    // );
 
     return new ImageResponse (
         (
